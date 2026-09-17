@@ -33,7 +33,7 @@ export default function Navbar({ activeSection }: { activeSection: string }) {
           scrolled ? "border-b border-white/10 bg-ink/70 backdrop-blur-xl" : "bg-transparent"
         }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-6 sm:py-5 md:px-10">
           <button
             onClick={() => scrollTo("hero")}
             className="font-display text-lg font-semibold tracking-tight text-white"
@@ -67,7 +67,7 @@ export default function Navbar({ activeSection }: { activeSection: string }) {
             className="text-white md:hidden"
             aria-label="Open menu"
           >
-            <Menu size={26} />
+            <Menu size={24} />
           </button>
         </div>
       </header>
@@ -79,15 +79,15 @@ export default function Navbar({ activeSection }: { activeSection: string }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.35 }}
-            className="fixed inset-0 z-[100] flex flex-col bg-ink/98 backdrop-blur-2xl md:hidden"
+            className="fixed inset-0 z-[100] flex flex-col overflow-y-auto bg-ink/98 backdrop-blur-2xl md:hidden"
           >
-            <div className="flex items-center justify-between px-6 py-5">
+            <div className="flex items-center justify-between px-5 py-4 sm:px-6 sm:py-5">
               <span className="font-display text-lg font-semibold text-white">web4u</span>
               <button onClick={() => setOpen(false)} className="text-white" aria-label="Close menu">
-                <X size={26} />
+                <X size={24} />
               </button>
             </div>
-            <div className="flex flex-1 flex-col items-start justify-center gap-2 px-8">
+            <div className="flex flex-1 flex-col items-start justify-center gap-1.5 px-6 py-6 sm:px-8">
               {LINKS.map((link, i) => (
                 <motion.button
                   key={link.id}
@@ -95,7 +95,7 @@ export default function Navbar({ activeSection }: { activeSection: string }) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.08 * i, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                   onClick={() => scrollTo(link.id)}
-                  className="font-display py-3 text-4xl font-medium text-white/85 hover:text-white"
+                  className="font-display py-2.5 text-3xl font-medium text-white/85 hover:text-white sm:text-4xl"
                 >
                   {link.label}
                 </motion.button>
@@ -105,7 +105,7 @@ export default function Navbar({ activeSection }: { activeSection: string }) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.08 * LINKS.length, duration: 0.5 }}
                 onClick={() => scrollTo("booking")}
-                className="btn-glow mt-8 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-3 text-base font-medium text-white"
+                className="btn-glow mt-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-3 text-base font-medium text-white sm:mt-8"
               >
                 Book a Project <ArrowUpRight size={18} />
               </motion.button>

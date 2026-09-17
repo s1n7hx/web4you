@@ -58,21 +58,26 @@ export default function CentralObject({ activeSection, pointer, lowPower }: Cent
     );
     group.current.rotation.z = THREE.MathUtils.damp(group.current.rotation.z, target.rotation[2], damp, delta);
 
+    const isMobile = state.viewport.width < 5.5;
+    const posX = isMobile ? Math.min(target.position[0], 0.6) : target.position[0];
+    const posY = isMobile ? target.position[1] + 0.3 : target.position[1];
+    const targetScale = isMobile ? target.scale * 0.62 : target.scale;
+
     group.current.position.x = THREE.MathUtils.damp(
       group.current.position.x,
-      target.position[0] + pointer.current.x * 0.25,
+      posX + pointer.current.x * (isMobile ? 0.1 : 0.25),
       damp,
       delta
     );
     group.current.position.y = THREE.MathUtils.damp(
       group.current.position.y,
-      target.position[1] - pointer.current.y * 0.15,
+      posY - pointer.current.y * 0.15,
       damp,
       delta
     );
     group.current.position.z = THREE.MathUtils.damp(group.current.position.z, target.position[2], damp, delta);
 
-    const s = THREE.MathUtils.damp(group.current.scale.x, target.scale, damp, delta);
+    const s = THREE.MathUtils.damp(group.current.scale.x, targetScale, damp, delta);
     group.current.scale.setScalar(s);
 
     // Colour blend for wireframe / emissive accents.

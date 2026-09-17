@@ -6,15 +6,15 @@ export default function FinalCTA() {
     <section
       id="cta"
       data-section
-      className="relative flex min-h-[85vh] flex-col items-center justify-center overflow-hidden py-32 text-center"
+      className="relative flex min-h-[85vh] flex-col items-center justify-center overflow-hidden px-6 py-24 text-center sm:py-32 md:px-10"
     >
       <Reveal>
-        <span className="mb-6 inline-block text-[11px] font-medium uppercase tracking-[0.3em] text-white/45">
+        <span className="mb-6 inline-block text-[10px] font-medium uppercase tracking-[0.2em] text-white/45 sm:text-[11px] sm:tracking-[0.3em]">
           Ready when you are
         </span>
       </Reveal>
       <Reveal delay={0.08}>
-        <h2 className="font-display max-w-4xl text-balance text-5xl font-medium leading-[1.02] tracking-tight text-white sm:text-6xl md:text-7xl">
+        <h2 className="font-display max-w-4xl text-balance break-words text-3xl font-medium leading-[1.08] tracking-tight text-white sm:text-5xl sm:leading-[1.02] md:text-6xl lg:text-7xl">
           YOUR NEXT WEBSITE <span className="gradient-text">STARTS HERE.</span>
         </h2>
       </Reveal>

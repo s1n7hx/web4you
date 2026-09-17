@@ -33,8 +33,8 @@ export default function SceneBackground({ activeSection, pointer, lowPower }: Sc
       dpr={dpr.current}
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       camera={{ position: [0, 0, 7.5], fov: 42 }}
-      className="!fixed inset-0"
-      style={{ position: "fixed", inset: 0, zIndex: 0 }}
+      className="!fixed inset-0 pointer-events-none"
+      style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none" }}
     >
       <color attach="background" args={["#050506"]} />
       <fog attach="fog" args={["#050506", 8, 20]} />

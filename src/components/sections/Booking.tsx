@@ -92,21 +92,21 @@ export default function Booking() {
   };
 
   return (
-    <section id="booking" data-section className="relative py-32 md:py-44">
-      <div className="mx-auto max-w-7xl px-6 md:px-10">
-        <Reveal className="mb-16 text-center md:mb-20">
-          <span className="mb-4 block text-[11px] font-medium uppercase tracking-[0.3em] text-white/45">
+    <section id="booking" data-section className="relative py-20 sm:py-32 md:py-44">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-10">
+        <Reveal className="mb-12 text-center sm:mb-16 md:mb-20">
+          <span className="mb-4 block text-[10px] font-medium uppercase tracking-[0.2em] text-white/45 sm:text-[11px] sm:tracking-[0.3em]">
             Start a Project
           </span>
-          <h2 className="font-display mx-auto max-w-3xl text-balance text-4xl font-medium tracking-tight text-white sm:text-5xl md:text-6xl">
+          <h2 className="font-display mx-auto max-w-3xl text-balance break-words text-3xl font-medium tracking-tight text-white sm:text-5xl md:text-6xl">
             Let&apos;s Build Something Great.
           </h2>
-          <p className="mx-auto mt-5 max-w-lg text-balance text-white/55">
+          <p className="mx-auto mt-4 max-w-lg text-balance text-sm text-white/55 sm:mt-5 sm:text-base">
             Tell us what you&apos;re looking to build.
           </p>
         </Reveal>
 
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10">
           <div className="hidden lg:col-span-4 lg:flex lg:flex-col lg:justify-between">
             <div className="card-surface relative h-[420px] overflow-hidden rounded-3xl">
               <BookingObject step={step} totalSteps={TOTAL_STEPS} />
@@ -120,7 +120,7 @@ export default function Booking() {
           </div>
 
           <div className="lg:col-span-8">
-            <div className="card-surface relative overflow-hidden rounded-3xl p-8 md:p-12">
+            <div className="card-surface relative overflow-hidden rounded-2xl p-5 sm:rounded-3xl sm:p-8 md:p-12">
               {status !== "done" && (
                 <div className="mb-10 flex items-center gap-2">
                   {Array.from({ length: TOTAL_STEPS }).map((_, i) => (
@@ -213,12 +213,12 @@ export default function Booking() {
                     {step === 2 && (
                       <div className="flex flex-col gap-5">
                         <StepHeading eyebrow="Step 2" title="What are you looking to build?" />
-                        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-3 sm:gap-3">
                           {PROJECT_TYPES.map((type) => (
                             <button
                               key={type}
                               onClick={() => update({ projectType: type })}
-                              className={`rounded-xl border px-4 py-4 text-left text-sm transition-all ${
+                              className={`rounded-xl border px-4 py-3.5 text-left text-sm transition-all sm:py-4 ${
                                 data.projectType === type
                                   ? "border-accent/60 bg-accent/10 text-white"
                                   : "border-white/10 text-white/60 hover:border-white/25 hover:text-white"
@@ -340,9 +340,9 @@ export default function Booking() {
 
 function StepHeading({ eyebrow, title }: { eyebrow: string; title: string }) {
   return (
-    <div className="mb-2">
-      <span className="text-xs uppercase tracking-[0.25em] text-white/40">{eyebrow}</span>
-      <h3 className="font-display mt-2 text-2xl font-medium text-white md:text-3xl">{title}</h3>
+    <div className="mb-1 sm:mb-2">
+      <span className="text-[10px] uppercase tracking-[0.2em] text-white/40 sm:text-xs sm:tracking-[0.25em]">{eyebrow}</span>
+      <h3 className="font-display mt-1 text-xl font-medium text-white sm:mt-2 sm:text-2xl md:text-3xl">{title}</h3>
     </div>
   );
 }

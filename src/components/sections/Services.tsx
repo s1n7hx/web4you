@@ -49,20 +49,20 @@ export default function Services() {
   const [active, setActive] = useState(0);
 
   return (
-    <section id="services" data-section className="relative py-32 md:py-44">
-      <div className="mx-auto max-w-7xl px-6 md:px-10">
+    <section id="services" data-section className="relative py-20 sm:py-32 md:py-44">
+      <div className="mx-auto max-w-7xl px-5 sm:px-6 md:px-10">
         <Reveal>
-          <span className="mb-4 block text-[11px] font-medium uppercase tracking-[0.3em] text-white/45">
+          <span className="mb-4 block text-[10px] font-medium uppercase tracking-[0.2em] text-white/45 sm:text-[11px] sm:tracking-[0.3em]">
             Capability
           </span>
-          <h2 className="font-display mb-16 text-4xl font-medium tracking-tight text-white sm:text-5xl md:text-6xl">
+          <h2 className="font-display mb-12 text-3xl font-medium tracking-tight text-white sm:mb-16 sm:text-5xl md:text-6xl">
             What We Build
           </h2>
         </Reveal>
 
-        <div className="grid grid-cols-1 gap-14 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-7">
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 sm:gap-4">
               {SERVICES.map((service, i) => {
                 const Icon = service.icon;
                 const isActive = active === i;
@@ -73,7 +73,7 @@ export default function Services() {
                       onClick={() => setActive(i)}
                       whileHover={{ y: -6, rotateX: 4, rotateY: -4 }}
                       style={{ transformPerspective: 800 }}
-                      className={`card-surface group relative flex h-full w-full flex-col items-start gap-4 rounded-2xl p-6 text-left transition-colors ${
+                      className={`card-surface group relative flex h-full w-full flex-col items-start gap-3.5 rounded-2xl p-5 text-left transition-colors sm:gap-4 sm:p-6 ${
                         isActive ? "border-white/30 bg-white/[0.07]" : ""
                       }`}
                     >

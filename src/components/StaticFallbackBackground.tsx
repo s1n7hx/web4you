@@ -1,6 +1,6 @@
 export default function StaticFallbackBackground() {
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden bg-ink">
+    <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-ink">
       <div
         className="absolute -top-1/3 left-1/2 h-[70vh] w-[70vh] -translate-x-1/2 rounded-full opacity-30 blur-3xl"
         style={{ background: "radial-gradient(circle, #7c6cf6, transparent 70%)" }}

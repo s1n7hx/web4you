@@ -2,15 +2,15 @@ import Reveal from "../Reveal";
 
 export default function About() {
   return (
-    <section id="about" data-section className="relative flex min-h-[90vh] items-center py-32 md:py-44">
-      <div className="mx-auto max-w-7xl px-6 md:px-10">
+    <section id="about" data-section className="relative flex min-h-[80vh] items-center py-20 sm:py-32 md:py-44">
+      <div className="mx-auto max-w-7xl px-5 sm:px-6 md:px-10">
         <Reveal>
-          <span className="mb-6 block text-[11px] font-medium uppercase tracking-[0.3em] text-white/45">
+          <span className="mb-6 block text-[10px] font-medium uppercase tracking-[0.2em] text-white/45 sm:text-[11px] sm:tracking-[0.3em]">
             About the Studio
           </span>
         </Reveal>
         <Reveal delay={0.08}>
-          <h2 className="font-display max-w-4xl text-balance text-4xl font-medium leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
+          <h2 className="font-display max-w-4xl text-balance break-words text-2xl font-medium leading-[1.1] tracking-tight text-white sm:text-4xl sm:leading-[1.05] md:text-5xl lg:text-6xl">
             WE DON&apos;T JUST BUILD WEBSITES. <span className="text-white/40">WE BUILD DIGITAL EXPERIENCES.</span>
           </h2>
         </Reveal>

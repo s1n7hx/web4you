@@ -54,15 +54,15 @@ export default function Footer() {
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <footer className="relative border-t border-white/10 py-14">
-      <div className="mx-auto flex max-w-7xl flex-col gap-10 px-6 md:px-10">
+    <footer className="relative border-t border-white/10 py-12 sm:py-14">
+      <div className="mx-auto flex max-w-7xl flex-col gap-10 px-5 sm:px-6 md:px-10">
         <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
           <div>
             <span className="font-display block text-2xl font-semibold text-white">web4u</span>
             <span className="mt-2 block text-sm text-white/45">Design. Development. Digital Experiences.</span>
           </div>
 
-          <nav className="flex flex-wrap gap-x-8 gap-y-3">
+          <nav className="flex flex-wrap gap-x-6 gap-y-3 sm:gap-x-8">
             {LINKS.map((link) => (
               <button
                 key={link.id}

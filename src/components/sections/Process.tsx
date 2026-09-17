@@ -41,34 +41,34 @@ export default function Process() {
   const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <section id="process" data-section className="relative py-32 md:py-44">
-      <div className="mx-auto max-w-5xl px-6 md:px-10">
+    <section id="process" data-section className="relative py-20 sm:py-32 md:py-44">
+      <div className="mx-auto max-w-5xl px-5 sm:px-6 md:px-10">
         <Reveal>
-          <span className="mb-4 block text-[11px] font-medium uppercase tracking-[0.3em] text-white/45">
+          <span className="mb-4 block text-[10px] font-medium uppercase tracking-[0.2em] text-white/45 sm:text-[11px] sm:tracking-[0.3em]">
             Method
           </span>
-          <h2 className="font-display mb-20 text-4xl font-medium tracking-tight text-white sm:text-5xl md:text-6xl">
+          <h2 className="font-display mb-14 text-3xl font-medium tracking-tight text-white sm:mb-20 sm:text-5xl md:text-6xl">
             From Idea To Launch
           </h2>
         </Reveal>
 
-        <div ref={ref} className="relative pl-10 md:pl-16">
-          <div className="absolute left-[7px] top-2 h-[calc(100%-1rem)] w-px bg-white/10 md:left-[15px]" />
+        <div ref={ref} className="relative pl-7 sm:pl-10 md:pl-14">
+          <div className="absolute left-[6px] top-2 h-[calc(100%-1rem)] w-px bg-white/10 sm:left-[8px]" />
           <motion.div
             style={{ height: lineHeight }}
-            className="absolute left-[7px] top-2 w-px bg-gradient-to-b from-accent via-accent-2 to-transparent md:left-[15px]"
+            className="absolute left-[6px] top-2 w-px bg-gradient-to-b from-accent via-accent-2 to-transparent sm:left-[8px]"
           />
 
-          <div className="flex flex-col gap-16">
+          <div className="flex flex-col gap-12 sm:gap-16">
             {STEPS.map((step, i) => (
               <Reveal key={step.n} delay={i * 0.05} y={20}>
                 <div className="relative">
-                  <span className="absolute -left-10 top-0 h-3.5 w-3.5 -translate-x-1/2 rounded-full border-2 border-accent-2 bg-ink md:-left-16" />
-                  <div className="flex flex-col gap-2 md:flex-row md:items-baseline md:gap-8">
-                    <span className="font-display text-sm font-medium text-white/35">{step.n}</span>
+                  <span className="absolute -left-[22px] top-1.5 h-3 w-3 -translate-x-1/2 rounded-full border-2 border-accent-2 bg-ink sm:-left-[32px] sm:h-3.5 sm:w-3.5 md:-left-[48px]" />
+                  <div className="flex flex-col gap-1.5 md:flex-row md:items-baseline md:gap-8">
+                    <span className="font-display text-xs font-medium text-white/35 sm:text-sm">{step.n}</span>
                     <div>
-                      <h3 className="font-display text-2xl font-medium text-white md:text-3xl">{step.title}</h3>
-                      <p className="mt-2 max-w-lg text-sm leading-relaxed text-white/55 md:text-base">{step.text}</p>
+                      <h3 className="font-display text-xl font-medium text-white sm:text-2xl md:text-3xl">{step.title}</h3>
+                      <p className="mt-1.5 max-w-lg text-xs leading-relaxed text-white/55 sm:text-sm md:text-base">{step.text}</p>
                     </div>
                   </div>
                 </div>

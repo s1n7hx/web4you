@@ -18,18 +18,18 @@ const STACK = [
 
 export default function Capabilities() {
   return (
-    <section id="capabilities" data-section className="relative py-28 md:py-36">
-      <div className="mx-auto max-w-7xl px-6 md:px-10">
+    <section id="capabilities" data-section className="relative py-20 sm:py-28 md:py-36">
+      <div className="mx-auto max-w-7xl px-5 sm:px-6 md:px-10">
         <Reveal>
-          <span className="mb-4 block text-[11px] font-medium uppercase tracking-[0.3em] text-white/45">
+          <span className="mb-4 block text-[10px] font-medium uppercase tracking-[0.2em] text-white/45 sm:text-[11px] sm:tracking-[0.3em]">
             Toolkit
           </span>
-          <h2 className="font-display mb-14 text-3xl font-medium tracking-tight text-white sm:text-4xl md:text-5xl">
+          <h2 className="font-display mb-10 text-2xl font-medium tracking-tight text-white sm:mb-14 sm:text-4xl md:text-5xl">
             Capabilities &amp; Technology
           </h2>
         </Reveal>
 
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-2 sm:gap-3">
           {STACK.map((tech, i) => (
             <Reveal key={tech} delay={i * 0.02} y={12}>
               <motion.div
@@ -39,7 +39,7 @@ export default function Capabilities() {
                   boxShadow: "0 20px 40px -20px rgba(124,108,246,0.45)",
                 }}
                 style={{ transformPerspective: 600 }}
-                className="card-surface cursor-default rounded-full px-5 py-2.5 text-sm text-white/75 transition-colors hover:border-white/30 hover:text-white"
+                className="card-surface cursor-default rounded-full px-3.5 py-2 text-xs text-white/75 transition-colors hover:border-white/30 hover:text-white sm:px-5 sm:py-2.5 sm:text-sm"
               >
                 {tech}
               </motion.div>

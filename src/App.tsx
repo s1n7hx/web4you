@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import AppBackground from "./components/AppBackground";
+import SceneBackground from "./components/AppBackground";
 import Navbar from "./components/Navbar";
 import Hero from "./components/sections/Hero";
 import Work from "./components/sections/Work";
@@ -29,13 +29,13 @@ export default function App() {
   const activeSection = useMemo(() => active || "hero", [active]);
 
   return (
-    <div className="relative min-h-screen bg-ink text-white">
-      <AppBackground activeSection={activeSection} />
+    <div className="relative min-h-screen w-full max-w-full overflow-x-hidden bg-ink text-white">
+      <SceneBackgroundBackground activeSection={activeSection} />
       <div className="noise-overlay" />
 
       <Navbar activeSection={activeSection} />
 
-      <main className="relative z-10">
+      <main className="relative z-10 w-full max-w-full overflow-x-hidden">
         <Hero />
         <Work />
         <Services />
@@ -46,7 +46,7 @@ export default function App() {
         <FinalCTA />
       </main>
 
-      <div className="relative z-10">
+      <div className="relative z-10 w-full max-w-full overflow-x-hidden">
         <Footer />
       </div>
     </div>

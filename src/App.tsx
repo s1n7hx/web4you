@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import SceneBackground from "./components/AppBackground";
+import AppBackground from "./components/AppBackground";
 import Navbar from "./components/Navbar";
 import Hero from "./components/sections/Hero";
 import Work from "./components/sections/Work";
@@ -30,7 +30,7 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen w-full max-w-full overflow-x-hidden bg-ink text-white">
-      <SceneBackgroundBackground activeSection={activeSection} />
+      <AppBackground activeSection={activeSection} />
       <div className="noise-overlay" />
 
       <Navbar activeSection={activeSection} />

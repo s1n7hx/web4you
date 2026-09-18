@@ -3,7 +3,12 @@ import Reveal from "../Reveal";
 export default function About() {
   return (
     <section id="about" data-section className="relative flex min-h-[80vh] items-center py-20 sm:py-32 md:py-44">
-      <div className="mx-auto max-w-7xl px-5 sm:px-6 md:px-10">
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-6 md:px-10">
+        {/* Soft ambient readability scrim */}
+        <div
+          className="pointer-events-none absolute -inset-x-8 -inset-y-12 -z-10 rounded-3xl bg-[radial-gradient(ellipse_at_center,rgba(5,5,6,0.85)_0%,rgba(5,5,6,0.6)_50%,transparent_85%)] blur-2xl"
+          aria-hidden="true"
+        />
         <Reveal>
           <span className="mb-6 block text-[10px] font-medium uppercase tracking-[0.2em] text-white/45 sm:text-[11px] sm:tracking-[0.3em]">
             About the Studio

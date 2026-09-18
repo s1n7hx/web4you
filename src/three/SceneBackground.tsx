@@ -51,9 +51,9 @@ export default function SceneBackground({ activeSection, pointer, lowPower }: Sc
 
       {!lowPower && (
         <EffectComposer multisampling={0}>
-          <Bloom intensity={0.65} luminanceThreshold={0.18} luminanceSmoothing={0.35} mipmapBlur radius={0.7} />
-          <Noise opacity={0.02} />
-          <Vignette eskil={false} offset={0.2} darkness={0.9} />
+          <Bloom intensity={0.42} luminanceThreshold={0.42} luminanceSmoothing={0.3} mipmapBlur radius={0.65} />
+          <Noise opacity={0.018} />
+          <Vignette eskil={false} offset={0.25} darkness={0.95} />
         </EffectComposer>
       )}
     </Canvas>

@@ -59,13 +59,19 @@ export default function CentralObject({ activeSection, pointer, lowPower }: Cent
     group.current.rotation.z = THREE.MathUtils.damp(group.current.rotation.z, target.rotation[2], damp, delta);
 
     const isMobile = state.viewport.width < 5.5;
-    const posX = isMobile ? Math.min(target.position[0], 0.6) : target.position[0];
-    const posY = isMobile ? target.position[1] + 0.3 : target.position[1];
-    const targetScale = isMobile ? target.scale * 0.62 : target.scale;
+    const isHero = activeSection === "hero";
+    const posX = isMobile
+      ? (isHero ? 0.95 : Math.min(target.position[0], 0.7))
+      : target.position[0];
+    const posY = isMobile
+      ? target.position[1] + (isHero ? 0.65 : 0.2)
+      : target.position[1];
+    const posZ = target.position[2] - (isMobile ? 1.0 : 0);
+    const targetScale = isMobile ? target.scale * 0.52 : target.scale;
 
     group.current.position.x = THREE.MathUtils.damp(
       group.current.position.x,
-      posX + pointer.current.x * (isMobile ? 0.1 : 0.25),
+      posX + pointer.current.x * (isMobile ? 0.08 : 0.25),
       damp,
       delta
     );
@@ -75,7 +81,7 @@ export default function CentralObject({ activeSection, pointer, lowPower }: Cent
       damp,
       delta
     );
-    group.current.position.z = THREE.MathUtils.damp(group.current.position.z, target.position[2], damp, delta);
+    group.current.position.z = THREE.MathUtils.damp(group.current.position.z, posZ, damp, delta);
 
     const s = THREE.MathUtils.damp(group.current.scale.x, targetScale, damp, delta);
     group.current.scale.setScalar(s);
@@ -89,10 +95,11 @@ export default function CentralObject({ activeSection, pointer, lowPower }: Cent
     if (wire.current) {
       const mat = wire.current.material as THREE.MeshBasicMaterial;
       mat.color = colorObj.current;
+      mat.opacity = isMobile ? 0.22 : 0.32;
     }
     if (light.current) {
       light.current.color = colorObj.current;
-      light.current.intensity = lowPower ? 4 : 6;
+      light.current.intensity = lowPower ? 2.5 : 3.8;
     }
 
     if (core.current) {
@@ -114,7 +121,7 @@ export default function CentralObject({ activeSection, pointer, lowPower }: Cent
 
   return (
     <group ref={group}>
-      <pointLight ref={light} position={[0, 0, 0]} intensity={6} distance={8} decay={2} />
+      <pointLight ref={light} position={[0, 0, 0]} intensity={4} distance={8} decay={2} />
 
       {/* Glass core */}
       <mesh ref={core}>
@@ -125,7 +132,7 @@ export default function CentralObject({ activeSection, pointer, lowPower }: Cent
             metalness={0.6}
             roughness={0.25}
             emissive="#221f3a"
-            emissiveIntensity={0.4}
+            emissiveIntensity={0.3}
           />
         ) : (
           <MeshTransmissionMaterial
@@ -145,7 +152,7 @@ export default function CentralObject({ activeSection, pointer, lowPower }: Cent
       {/* Outer wireframe shell */}
       <mesh ref={wire} scale={1.55}>
         <icosahedronGeometry args={[1, 1]} />
-        <meshBasicMaterial color="#7c6cf6" wireframe transparent opacity={0.55} />
+        <meshBasicMaterial color="#7c6cf6" wireframe transparent opacity={0.32} />
       </mesh>
 
       {/* Thin metallic floating interface panels */}
@@ -156,12 +163,12 @@ export default function CentralObject({ activeSection, pointer, lowPower }: Cent
             <meshStandardMaterial
               color="#0e0e14"
               metalness={0.9}
-              roughness={0.2}
+              roughness={0.25}
               emissive="#3fd7ff"
-              emissiveIntensity={0.08}
+              emissiveIntensity={0.04}
               side={THREE.DoubleSide}
               transparent
-              opacity={0.9}
+              opacity={0.65}
             />
             <Edges scale={1} threshold={15} color="#8f88ff" />
           </mesh>

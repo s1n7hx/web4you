@@ -34,15 +34,21 @@ export default function Hero() {
             animate="show"
             className="relative z-10 col-span-12 md:col-span-8 lg:col-span-7"
           >
+            {/* Ambient readability scrim matching ink canvas, ensures 3D background never disturbs typography */}
+            <div
+              className="pointer-events-none absolute -inset-x-6 -inset-y-8 -z-10 rounded-3xl bg-[radial-gradient(ellipse_at_top_left,rgba(5,5,6,0.92)_0%,rgba(5,5,6,0.78)_45%,transparent_85%)] blur-2xl md:bg-[radial-gradient(ellipse_at_center_left,rgba(5,5,6,0.9)_0%,rgba(5,5,6,0.65)_55%,transparent_90%)]"
+              aria-hidden="true"
+            />
+
             <motion.div variants={item} className="mb-5 sm:mb-6">
-              <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-[10px] font-medium uppercase tracking-[0.14em] text-white/70 sm:px-4 sm:text-[11px] sm:tracking-[0.22em]">
+              <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-white/15 bg-ink/70 px-3.5 py-1.5 text-[10px] font-medium uppercase tracking-[0.14em] text-white/80 backdrop-blur-md sm:px-4 sm:text-[11px] sm:tracking-[0.22em]">
                 Digital Experiences / Web Development
               </span>
             </motion.div>
 
             <motion.h1
               variants={item}
-              className="font-display break-words text-[1.9rem] font-medium leading-[1.08] tracking-tight text-white sm:text-5xl sm:leading-[0.98] md:text-6xl lg:text-7xl"
+              className="font-display break-words text-[1.9rem] font-medium leading-[1.08] tracking-tight text-white drop-shadow-[0_2px_14px_rgba(5,5,6,0.95)] sm:text-5xl sm:leading-[0.98] md:text-6xl lg:text-7xl"
             >
               <span className="block">WE BUILD</span>
               <span className="gradient-text block">DIGITAL EXPERIENCES</span>
@@ -51,7 +57,7 @@ export default function Hero() {
 
             <motion.p
               variants={item}
-              className="mt-5 max-w-xl break-words text-sm leading-relaxed text-white/65 sm:mt-7 sm:text-base md:text-lg"
+              className="mt-5 max-w-xl break-words text-sm leading-relaxed text-white/75 drop-shadow-[0_1px_8px_rgba(5,5,6,0.9)] sm:mt-7 sm:text-base md:text-lg"
             >
               web4u is a web design and development studio crafting premium websites, e-commerce
               platforms, booking systems and custom web applications for ambitious businesses.

@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import AppBackground from "./components/AppBackground";
 import Navbar from "./components/Navbar";
 import Hero from "./components/sections/Hero";
@@ -27,6 +27,18 @@ const SECTION_IDS: SectionKey[] = [
 export default function App() {
   const active = useActiveSection(SECTION_IDS) as SectionKey;
   const activeSection = useMemo(() => active || "hero", [active]);
+
+  useEffect(() => {
+    // Ensure fresh landing on the top hero view if no explicit hash anchor was provided
+    if (typeof window !== "undefined") {
+      if ("scrollRestoration" in window.history) {
+        window.history.scrollRestoration = "manual";
+      }
+      if (!window.location.hash) {
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      }
+    }
+  }, []);
 
   return (
     <div className="relative min-h-screen w-full max-w-full overflow-x-hidden bg-ink text-white">

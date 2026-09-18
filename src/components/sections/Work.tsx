@@ -24,16 +24,16 @@ export default function Work() {
           </div>
         </Reveal>
 
-        <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {/* Featured Live Project: Artisans Kart */}
-          <Reveal delay={0.05} className="md:col-span-2 lg:col-span-1">
+        <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2">
+          {/* Featured Live Project 1: Artisans Kart */}
+          <Reveal delay={0.05}>
             <a
               href="https://artisanskart.vercel.app"
               target="_blank"
               rel="noopener noreferrer"
               className="group block h-full focus:outline-none"
             >
-              <TiltCard className="card-surface relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 p-2.5 transition-all duration-300 hover:border-accent/40 sm:rounded-3xl sm:p-3">
+              <TiltCard className="card-surface relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 p-2.5 transition-all duration-300 hover:border-amber-400/50 sm:rounded-3xl sm:p-3">
                 <div className="relative overflow-hidden rounded-xl sm:rounded-2xl">
                   {/* Mockup viewport */}
                   <div className="relative flex h-52 flex-col justify-between overflow-hidden rounded-xl bg-gradient-to-br from-amber-500/25 via-orange-500/10 to-transparent p-4 sm:h-60 sm:rounded-2xl sm:p-5">
@@ -106,8 +106,95 @@ export default function Work() {
             </a>
           </Reveal>
 
+          {/* Featured Live Project 2: Solvalo */}
+          <Reveal delay={0.1}>
+            <a
+              href="https://solvalo.xyz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group block h-full focus:outline-none"
+            >
+              <TiltCard className="card-surface relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 p-2.5 transition-all duration-300 hover:border-cyan-400/50 sm:rounded-3xl sm:p-3">
+                <div className="relative overflow-hidden rounded-xl sm:rounded-2xl">
+                  {/* Mockup viewport */}
+                  <div className="relative flex h-52 flex-col justify-between overflow-hidden rounded-xl bg-gradient-to-br from-cyan-500/25 via-blue-600/15 to-transparent p-4 sm:h-60 sm:rounded-2xl sm:p-5">
+                    {/* Browser-style bar */}
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-1.5">
+                        <span className="h-2.5 w-2.5 rounded-full bg-white/30" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
+                      </div>
+                      <div className="flex max-w-[200px] truncate items-center gap-1 rounded-full border border-white/10 bg-black/40 px-3 py-1 text-[10px] text-white/70 backdrop-blur-md sm:text-[11px]">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        <span className="truncate">solvalo.xyz</span>
+                      </div>
+                      <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-emerald-300 border border-emerald-500/30">
+                        Live
+                      </span>
+                    </div>
+
+                    {/* Content preview blocks */}
+                    <div className="grid grid-cols-3 gap-2.5 opacity-90 sm:gap-3">
+                      <div className="col-span-2 flex h-20 flex-col justify-between rounded-xl border border-white/15 bg-white/5 p-3 backdrop-blur-sm sm:h-24">
+                        <div className="flex items-center gap-1.5">
+                          <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
+                          <span className="text-[10px] font-medium text-cyan-200 uppercase tracking-wider">Tech &amp; Utilities</span>
+                        </div>
+                        <div className="space-y-1.5">
+                          <div className="h-2 w-3/4 rounded-full bg-white/30" />
+                          <div className="h-2 w-1/2 rounded-full bg-cyan-400/40" />
+                        </div>
+                      </div>
+                      <div className="col-span-1 flex h-20 items-center justify-center rounded-xl border border-white/15 bg-cyan-500/10 backdrop-blur-sm sm:h-24">
+                        <span className="text-xl">⚡</span>
+                      </div>
+                      <div className="col-span-3 flex h-8 items-center justify-between rounded-xl border border-white/10 bg-white/5 px-3 backdrop-blur-sm sm:h-9">
+                        <span className="text-[10px] font-mono text-cyan-200/70">Tools · IoT · Smart Systems</span>
+                        <div className="h-4 w-12 rounded-full bg-cyan-400/30" />
+                      </div>
+                    </div>
+
+                    <div
+                      className="absolute -right-10 -top-10 h-40 w-40 rounded-full opacity-35 blur-3xl transition-transform duration-500 group-hover:scale-125"
+                      style={{ background: "#06b6d4" }}
+                    />
+                  </div>
+                </div>
+
+                <div className="flex flex-1 flex-col justify-between gap-3 p-4 sm:p-5">
+                  <div>
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <h3 className="font-display text-xl font-semibold text-white group-hover:text-cyan-300 transition-colors sm:text-2xl">
+                          Solvalo
+                        </h3>
+                        <span className="text-[10px] uppercase tracking-[0.2em] text-white/40 sm:text-xs">
+                          Tech Platform &amp; Web Utilities
+                        </span>
+                      </div>
+                      <span className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/15 text-white/70 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:border-cyan-400 group-hover:text-cyan-300 sm:h-10 sm:w-10">
+                        <ExternalLink size={15} />
+                      </span>
+                    </div>
+                    <p className="mt-2.5 text-xs leading-relaxed text-white/60 sm:text-sm">
+                      A modern technology and digital tools hub featuring in-depth technical guides, smart system architecture insights, and high-performance online utilities.
+                    </p>
+                  </div>
+
+                  <div className="mt-2 flex items-center justify-between pt-3 border-t border-white/10">
+                    <span className="text-xs font-mono text-white/40">solvalo.xyz</span>
+                    <span className="inline-flex items-center gap-1.5 text-xs font-medium text-cyan-300 group-hover:underline">
+                      Visit Site <ArrowUpRight size={13} />
+                    </span>
+                  </div>
+                </div>
+              </TiltCard>
+            </a>
+          </Reveal>
+
           {/* Future Work Space 1 */}
-          <Reveal delay={0.12}>
+          <Reveal delay={0.15}>
             <div
               onClick={() => scrollTo("booking")}
               className="group block h-full cursor-pointer focus:outline-none"
@@ -165,7 +252,7 @@ export default function Work() {
           </Reveal>
 
           {/* Future Work Space 2 */}
-          <Reveal delay={0.18}>
+          <Reveal delay={0.2}>
             <div
               onClick={() => scrollTo("booking")}
               className="group block h-full cursor-pointer focus:outline-none"

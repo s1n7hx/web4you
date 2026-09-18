@@ -322,7 +322,6 @@ export default function Booking() {
                             onChange={(e) => update({ name: e.target.value })}
                             placeholder="Jordan Blake"
                             className="input"
-                            autoFocus
                           />
                         </Field>
                         <Field label="Email address (for our direct response)">
@@ -376,7 +375,6 @@ export default function Booking() {
                             placeholder="Share your goals, target timeline, technical requirements, design inspirations, or links…"
                             rows={6}
                             className="input resize-none"
-                            autoFocus
                           />
                         </Field>
                       </div>

@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, Check, Copy, ExternalLink, Mail, Loader2, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Copy, ExternalLink, Mail, Loader2, Sparkles, Calendar } from "lucide-react";
 import Reveal from "../Reveal";
 import BookingObject from "../../three/BookingObject";
+import CalModal from "../CalModal";
 import {
   type FormData,
-  TARGET_EMAIL,
+  RECIPIENT_LABEL,
   sendBookingRequest,
   createMailtoLink,
   formatEmailTemplate,
 } from "../../utils/bookingService";
+import { getCalComUrl } from "../../utils/calcom";
 
 const PROJECT_TYPES = ["Website", "Redesign", "E-Commerce", "Booking System", "Web Application", "Other"];
 const BUDGETS = ["Under $5k", "$5k – $15k", "$15k – $40k", "$40k+", "Not sure yet"];
@@ -33,6 +35,7 @@ export default function Booking() {
   const [status, setStatus] = useState<"idle" | "submitting" | "done" | "fallback">("idle");
   const [direction, setDirection] = useState(1);
   const [copied, setCopied] = useState(false);
+  const [isCalModalOpen, setIsCalModalOpen] = useState(false);
 
   const update = (patch: Partial<FormData>) => setData((d) => ({ ...d, ...patch }));
 
@@ -50,7 +53,7 @@ export default function Booking() {
     if (step === 2) return Boolean(data.projectType);
     if (step === 3) return data.details.trim().length > 4;
     if (step === 4) return Boolean(data.budget);
-    if (step === 5) return Boolean(data.date && data.time);
+    if (step === 5) return Boolean((data.date && data.time) || data.date === "Cal.com Scheduled");
     return true;
   };
 
@@ -82,6 +85,15 @@ export default function Booking() {
 
   return (
     <section id="booking" data-section className="relative py-20 sm:py-32 md:py-44">
+      {/* Cal.com Interactive Modal */}
+      <CalModal
+        isOpen={isCalModalOpen}
+        onClose={() => setIsCalModalOpen(false)}
+        clientName={data.name}
+        clientEmail={data.email}
+        projectSummary={`${data.projectType || "Discovery"} (${data.budget || "TBD"})`}
+      />
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-10">
         <Reveal className="mb-12 text-center sm:mb-16 md:mb-20">
           <span className="mb-4 block text-[10px] font-medium uppercase tracking-[0.2em] text-white/45 sm:text-[11px] sm:tracking-[0.3em]">
@@ -91,8 +103,8 @@ export default function Booking() {
             Let&apos;s Build Something Great.
           </h2>
           <p className="mx-auto mt-4 max-w-lg text-balance text-sm text-white/55 sm:mt-5 sm:text-base">
-            Tell us what you&apos;re looking to build. Your request is dispatched directly to our lead partner at{" "}
-            <span className="text-white/80 underline decoration-white/30 underline-offset-4">{TARGET_EMAIL}</span>.
+            Tell us what you&apos;re looking to build. Your request is dispatched directly to our Studio Admin and lead
+            partners.
           </p>
         </Reveal>
 
@@ -107,8 +119,8 @@ export default function Booking() {
               </div>
               <p className="mt-2 text-sm leading-relaxed text-white/55">
                 Every booking creates a structured executive project brief sent immediately to{" "}
-                <span className="text-white/85">{TARGET_EMAIL}</span>. You will receive direct correspondence to confirm
-                your discovery session.
+                <span className="text-white/85">{RECIPIENT_LABEL}</span>. You can also lock in an instant discovery slot
+                directly on our live Cal.com calendar.
               </p>
             </div>
           </div>
@@ -148,24 +160,58 @@ export default function Booking() {
                       </motion.div>
                       <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300">
                         <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                        Dispatched to {TARGET_EMAIL}
+                        Dispatched to {RECIPIENT_LABEL}
                       </span>
                       <h3 className="font-display mt-4 text-2xl font-medium text-white md:text-3xl">
                         Request Received, {data.name.split(" ")[0] || "there"}.
                       </h3>
                       <p className="mt-2 max-w-lg text-sm text-white/65">
-                        Your project brief has been delivered directly to our lead partner inbox. We will review your
-                        specifications and reach out to <strong className="text-white">{data.email}</strong> to confirm your discovery call on{" "}
-                        <strong className="text-white">{data.date || "your preferred date"}</strong> at{" "}
-                        <strong className="text-white">{data.time || "your requested time"}</strong>.
+                        Your project brief has been delivered directly to our Studio Admin inbox. We will review your
+                        specifications and reach out to <strong className="text-white">{data.email}</strong> to confirm your discovery call.
                       </p>
                     </div>
 
+                    {/* Cal.com Instant Schedule Spotlight */}
+                    <div className="mt-6 rounded-2xl border border-accent/30 bg-gradient-to-r from-accent/15 via-accent/5 to-transparent p-5 backdrop-blur-md">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        <div>
+                          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-accent">
+                            <Calendar size={14} /> Schedule Now with Cal.com
+                          </div>
+                          <h4 className="mt-1 font-display text-base font-medium text-white sm:text-lg">
+                            Lock in your 30-min discovery call instantly
+                          </h4>
+                          <p className="mt-0.5 text-xs text-white/60">
+                            Pick an exact time slot on our live calendar. Google Meet details generated automatically.
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+                          <button
+                            onClick={() => setIsCalModalOpen(true)}
+                            className="btn-glow inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-white px-5 py-2.5 text-xs font-semibold text-ink transition-transform hover:scale-105"
+                          >
+                            <Calendar size={14} /> Book on Cal.com
+                          </button>
+                          {getCalComUrl() && (
+                            <a
+                              href={getCalComUrl(undefined, data.name, data.email)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="hidden sm:inline-flex items-center justify-center rounded-full border border-white/15 p-2.5 text-white/70 hover:bg-white/10 hover:text-white"
+                              title="Open in new tab"
+                            >
+                              <ExternalLink size={14} />
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
                     {/* Executive Template Preview */}
-                    <div className="mt-8 rounded-2xl border border-white/10 bg-black/40 p-5 backdrop-blur-md">
+                    <div className="mt-6 rounded-2xl border border-white/10 bg-black/40 p-5 backdrop-blur-md">
                       <div className="flex items-center justify-between border-b border-white/10 pb-3">
                         <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-white/50">
-                          <Mail size={14} className="text-accent" /> Professional Brief Sent
+                          <Mail size={14} className="text-accent" /> Professional Brief Summary
                         </div>
                         <div className="flex items-center gap-2">
                           <button
@@ -175,14 +221,6 @@ export default function Booking() {
                             <Copy size={12} />
                             {copied ? "Copied!" : "Copy Brief"}
                           </button>
-                          <a
-                            href={createMailtoLink(data)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 rounded-lg border border-accent/40 bg-accent/15 px-2.5 py-1 text-xs font-medium text-accent transition-colors hover:bg-accent/25"
-                          >
-                            <ExternalLink size={12} /> Open in Email App
-                          </a>
                         </div>
                       </div>
 
@@ -201,7 +239,7 @@ export default function Booking() {
                         <div className="col-span-1 sm:col-span-2 rounded-xl border border-white/5 bg-white/[0.02] p-3">
                           <span className="text-white/40 block uppercase tracking-wider text-[10px]">Target Call Schedule</span>
                           <span className="mt-0.5 block font-medium text-white/90">
-                            {data.date} at {data.time}
+                            {data.date ? `${data.date} at ${data.time || "Preferred Time"}` : "Cal.com Live Calendar"}
                           </span>
                         </div>
                         <div className="col-span-1 sm:col-span-2 rounded-xl border border-white/5 bg-white/[0.02] p-3">
@@ -236,11 +274,11 @@ export default function Booking() {
                     <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300">
                       <Mail size={28} />
                     </div>
-                    <h3 className="font-display text-2xl font-medium text-white">Direct Email Dispatch Ready</h3>
+                    <h3 className="font-display text-2xl font-medium text-white">Direct Dispatch to Studio Admin</h3>
                     <p className="mt-2 max-w-md text-sm text-white/60">
                       Your browser security or ad-blocker restricted automated web background calls. We&apos;ve
                       pre-formatted the complete professional template ready to send directly to{" "}
-                      <strong className="text-white">{TARGET_EMAIL}</strong>.
+                      <strong className="text-white">{RECIPIENT_LABEL}</strong>.
                     </p>
 
                     <div className="mt-6 flex flex-col sm:flex-row items-center gap-3">
@@ -248,7 +286,7 @@ export default function Booking() {
                         href={createMailtoLink(data)}
                         className="btn-glow inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-ink transition-transform hover:scale-105"
                       >
-                        <Mail size={16} /> Send via Mail App to {TARGET_EMAIL}
+                        <Mail size={16} /> Send via Mail App to {RECIPIENT_LABEL}
                       </a>
                       <button
                         onClick={handleCopy}
@@ -367,21 +405,58 @@ export default function Booking() {
 
                     {step === 5 && (
                       <div className="flex flex-col gap-5">
-                        <StepHeading eyebrow="Step 5" title="Preferred date &amp; time for discovery call." />
+                        <StepHeading eyebrow="Step 5" title="Discovery Call Scheduling" />
+
+                        {/* Cal.com Featured Card */}
+                        <div className="rounded-2xl border border-accent/40 bg-accent/10 p-5 backdrop-blur-sm">
+                          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                            <div>
+                              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-accent">
+                                <Calendar size={14} /> Schedule with Cal.com
+                              </div>
+                              <h4 className="mt-1 font-display text-base font-medium text-white sm:text-lg">
+                                Live Availability Calendar
+                              </h4>
+                              <p className="mt-0.5 text-xs text-white/60 leading-relaxed">
+                                Pick a 30-minute discovery slot instantly via Cal.com, or propose your preferred date &amp; time below.
+                              </p>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                update({ date: "Cal.com Scheduled", time: "Cal.com Slot" });
+                                setIsCalModalOpen(true);
+                              }}
+                              className="btn-glow inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-white px-5 py-2.5 text-xs font-semibold text-ink transition-transform hover:scale-105 shrink-0"
+                            >
+                              <Calendar size={14} /> Open Cal.com Calendar
+                            </button>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-3 my-1">
+                          <div className="h-px flex-1 bg-white/10" />
+                          <span className="text-[11px] uppercase tracking-wider text-white/40">
+                            Or propose preferred availability
+                          </span>
+                          <div className="h-px flex-1 bg-white/10" />
+                        </div>
+
                         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                           <Field label="Preferred date">
                             <input
                               type="date"
                               min={todayStr}
-                              value={data.date}
+                              value={data.date === "Cal.com Scheduled" ? "" : data.date}
                               onChange={(e) => update({ date: e.target.value })}
+                              placeholder="Select date"
                               className="input"
                             />
                           </Field>
                           <Field label="Preferred time">
                             <input
                               type="time"
-                              value={data.time}
+                              value={data.time === "Cal.com Slot" ? "" : data.time}
                               onChange={(e) => update({ time: e.target.value })}
                               className="input"
                             />
@@ -392,11 +467,11 @@ export default function Booking() {
                         <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 text-xs">
                           <div className="flex items-center gap-2 font-medium text-white/80">
                             <Mail size={14} className="text-accent" />
-                            Direct Dispatch Destination: <span className="text-accent font-semibold">{TARGET_EMAIL}</span>
+                            Direct Dispatch Destination: <span className="text-accent font-semibold">{RECIPIENT_LABEL}</span>
                           </div>
                           <p className="mt-1.5 text-white/50 leading-relaxed">
-                            Clicking &ldquo;Send Professional Request&rdquo; will format an executive project specification
-                            and deliver it directly to our studio inbox, with a receipt confirmation to {data.email || "your email"}.
+                            Clicking &ldquo;Send Professional Request&rdquo; delivers your executive project specification
+                            directly to the studio admin team, with a confirmation sent to {data.email || "your email"}.
                           </p>
                         </div>
                       </div>
@@ -427,7 +502,7 @@ export default function Booking() {
                         >
                           {status === "submitting" ? (
                             <>
-                              <Loader2 size={16} className="animate-spin" /> Dispatching to {TARGET_EMAIL}…
+                              <Loader2 size={16} className="animate-spin" /> Dispatching to {RECIPIENT_LABEL}…
                             </>
                           ) : (
                             <>
@@ -465,4 +540,5 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
     </label>
   );
 }
+
 

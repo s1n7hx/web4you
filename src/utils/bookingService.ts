@@ -10,6 +10,7 @@ export interface FormData {
 }
 
 export const TARGET_EMAIL = "ssumollah@gmail.com";
+export const RECIPIENT_LABEL = "Studio Admin";
 
 /**
  * Formats a clean executive plain-text template for the booking request.
@@ -37,8 +38,8 @@ PROJECT SPECIFICATIONS
 
 PREFERRED DISCOVERY CALL
 ------------------------------------------------------
-• Date:         ${data.date || "Flexible / Not specified"}
-• Time:         ${data.time || "Flexible / Not specified"}
+• Date:         ${data.date || "Flexible / Cal.com Selection"}
+• Time:         ${data.time || "Flexible / Cal.com Selection"}
 
 PROJECT SCOPE & REQUIREMENTS
 ------------------------------------------------------
@@ -46,7 +47,7 @@ ${data.details}
 
 ======================================================
 Submitted At:   ${timestamp}
-Target Inbox:   ${TARGET_EMAIL}
+Recipient:      Studio Admin & Leadership
 Direct Reply:   ${data.email}
 Status:         NEW INCOMING LEAD
 ======================================================`;

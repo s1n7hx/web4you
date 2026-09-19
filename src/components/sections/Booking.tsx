@@ -14,7 +14,52 @@ import {
 import { getCalComUrl } from "../../utils/calcom";
 
 const PROJECT_TYPES = ["Website", "Redesign", "E-Commerce", "Booking System", "Web Application", "Other"];
-const BUDGETS = ["Under $5k", "$5k – $15k", "$15k – $40k", "$40k+", "Not sure yet"];
+
+interface QualityTier {
+  id: string;
+  name: string;
+  badge: string;
+  description: string;
+  highlights: string;
+}
+
+const QUALITY_TIERS: QualityTier[] = [
+  {
+    id: "essential",
+    name: "Essential Modern Standard",
+    badge: "Clean & Fast",
+    description: "Streamlined, high-performance responsive web presence with crisp typography and core lead capture.",
+    highlights: "Lightning fast · Mobile optimized · Clean branding",
+  },
+  {
+    id: "studio-polish",
+    name: "Studio Polish & Micro-Interactions",
+    badge: "High Polish",
+    description: "Bespoke UI interactions, smooth transitions, custom motion design, and conversion-engineered layouts.",
+    highlights: "Custom animations · Branded design system · Dynamic CMS",
+  },
+  {
+    id: "flagship",
+    name: "Bespoke Flagship / 3D Experience",
+    badge: "Award Grade",
+    description: "Cutting-edge digital experience with bespoke 3D/WebGL elements, fluid kinetic typography, and editorial direction.",
+    highlights: "Interactive 3D canvas · Fluid micro-motion · Bespoke art direction",
+  },
+  {
+    id: "fullstack-app",
+    name: "Custom Web Application & Scalable Systems",
+    badge: "Advanced Logic",
+    description: "Full-stack functionality including user portals, custom databases, real-time APIs, and tailored workflows.",
+    highlights: "Custom database & auth · Multi-system APIs · Scalable architecture",
+  },
+  {
+    id: "tailored-consult",
+    name: "Tailored Scope & Custom Advisory",
+    badge: "Flexible",
+    description: "We will evaluate your exact vision and build a custom technical and design specification together.",
+    highlights: "Strategic roadmap · Bespoke technical brief · Consultative discovery",
+  },
+];
 
 const TOTAL_STEPS = 5;
 
@@ -24,7 +69,7 @@ const initialData: FormData = {
   company: "",
   projectType: "",
   details: "",
-  budget: "",
+  qualityTier: "",
   date: "",
   time: "",
 };
@@ -52,7 +97,7 @@ export default function Booking() {
     if (step === 1) return data.name.trim() && data.email.trim() && data.email.includes("@");
     if (step === 2) return Boolean(data.projectType);
     if (step === 3) return data.details.trim().length > 4;
-    if (step === 4) return Boolean(data.budget);
+    if (step === 4) return Boolean(data.qualityTier);
     if (step === 5) return Boolean((data.date && data.time) || data.date === "Cal.com Scheduled");
     return true;
   };
@@ -91,7 +136,7 @@ export default function Booking() {
         onClose={() => setIsCalModalOpen(false)}
         clientName={data.name}
         clientEmail={data.email}
-        projectSummary={`${data.projectType || "Discovery"} (${data.budget || "TBD"})`}
+        projectSummary={`${data.projectType || "Discovery"} (${data.qualityTier || "Custom Standard"})`}
       />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-10">
@@ -232,9 +277,9 @@ export default function Booking() {
                           {data.company && <span className="text-white/40 block">({data.company})</span>}
                         </div>
                         <div className="rounded-xl border border-white/5 bg-white/[0.02] p-3">
-                          <span className="text-white/40 block uppercase tracking-wider text-[10px]">Project &amp; Budget</span>
+                          <span className="text-white/40 block uppercase tracking-wider text-[10px]">Project &amp; Quality Standard</span>
                           <span className="mt-0.5 block font-medium text-accent">{data.projectType}</span>
-                          <span className="text-white/60">Estimated: {data.budget}</span>
+                          <span className="text-white/60">Standard: {data.qualityTier || "Custom"}</span>
                         </div>
                         <div className="col-span-1 sm:col-span-2 rounded-xl border border-white/5 bg-white/[0.02] p-3">
                           <span className="text-white/40 block uppercase tracking-wider text-[10px]">Target Call Schedule</span>
@@ -382,21 +427,61 @@ export default function Booking() {
 
                     {step === 4 && (
                       <div className="flex flex-col gap-5">
-                        <StepHeading eyebrow="Step 4" title="What's your intended budget?" />
+                        <div>
+                          <StepHeading eyebrow="Step 4" title="What quality &amp; craft standard are you aiming for?" />
+                          <p className="mt-1 text-xs text-white/50 leading-relaxed">
+                            Select the standard of build you envision. Final technical scope and pricing are tailored and decided together during discovery.
+                          </p>
+                        </div>
                         <div className="flex flex-col gap-3">
-                          {BUDGETS.map((b) => (
-                            <button
-                              key={b}
-                              onClick={() => update({ budget: b })}
-                              className={`rounded-xl border px-5 py-3.5 text-left text-sm transition-all ${
-                                data.budget === b
-                                  ? "border-accent/60 bg-accent/10 text-white shadow-[0_0_15px_rgba(124,108,246,0.2)]"
-                                  : "border-white/10 text-white/60 hover:border-white/25 hover:text-white"
-                              }`}
-                            >
-                              {b}
-                            </button>
-                          ))}
+                          {QUALITY_TIERS.map((tier) => {
+                            const isSelected = data.qualityTier === tier.name;
+                            return (
+                              <button
+                                key={tier.id}
+                                type="button"
+                                onClick={() => update({ qualityTier: tier.name })}
+                                className={`group relative flex flex-col gap-1.5 rounded-2xl border p-4 text-left transition-all sm:p-5 ${
+                                  isSelected
+                                    ? "border-accent/80 bg-accent/15 text-white shadow-[0_0_20px_rgba(124,108,246,0.25)] ring-1 ring-accent/40"
+                                    : "border-white/10 bg-white/[0.02] text-white/70 hover:border-white/25 hover:bg-white/[0.05] hover:text-white"
+                                }`}
+                              >
+                                <div className="flex items-center justify-between gap-2">
+                                  <div className="flex items-center gap-2.5">
+                                    <span
+                                      className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border text-[10px] transition-colors ${
+                                        isSelected
+                                          ? "border-accent bg-accent text-ink font-bold"
+                                          : "border-white/20 text-transparent group-hover:border-white/40"
+                                      }`}
+                                    >
+                                      <Check size={12} strokeWidth={3} />
+                                    </span>
+                                    <span className="font-display text-base font-medium text-white sm:text-lg">
+                                      {tier.name}
+                                    </span>
+                                  </div>
+                                  <span
+                                    className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider transition-colors ${
+                                      isSelected
+                                        ? "border border-accent/40 bg-accent/20 text-accent"
+                                        : "border border-white/10 bg-white/5 text-white/50"
+                                    }`}
+                                  >
+                                    {tier.badge}
+                                  </span>
+                                </div>
+
+                                <p className="pl-7 text-xs leading-relaxed text-white/60 sm:text-sm">
+                                  {tier.description}
+                                </p>
+                                <div className="pl-7 pt-0.5 text-[11px] font-mono text-white/40">
+                                  ✦ {tier.highlights}
+                                </div>
+                              </button>
+                            );
+                          })}
                         </div>
                       </div>
                     )}

@@ -4,7 +4,8 @@ export interface FormData {
   company: string;
   projectType: string;
   details: string;
-  budget: string;
+  qualityTier: string;
+  budget?: string;
   date: string;
   time: string;
 }
@@ -21,35 +22,37 @@ export function formatEmailTemplate(data: FormData): string {
     timeStyle: "short",
   });
 
+  const quality = data.qualityTier || data.budget || "Custom Standard";
+
   return `======================================================
              web4u STUDIO — NEW PROJECT BRIEF
 ======================================================
 
 CLIENT PROFILE
 ------------------------------------------------------
-• Full Name:    ${data.name}
-• Email:        ${data.email}
-• Company:      ${data.company?.trim() ? data.company.trim() : "Independent / Startup"}
+• Full Name:        ${data.name}
+• Email:            ${data.email}
+• Company:          ${data.company?.trim() ? data.company.trim() : "Independent / Startup"}
 
 PROJECT SPECIFICATIONS
 ------------------------------------------------------
-• Service Type: ${data.projectType}
-• Budget Range: ${data.budget}
+• Service Type:     ${data.projectType}
+• Quality Standard: ${quality}
 
 PREFERRED DISCOVERY CALL
 ------------------------------------------------------
-• Date:         ${data.date || "Flexible / Cal.com Selection"}
-• Time:         ${data.time || "Flexible / Cal.com Selection"}
+• Date:             ${data.date || "Flexible / Cal.com Selection"}
+• Time:             ${data.time || "Flexible / Cal.com Selection"}
 
 PROJECT SCOPE & REQUIREMENTS
 ------------------------------------------------------
 ${data.details}
 
 ======================================================
-Submitted At:   ${timestamp}
-Recipient:      Studio Admin & Leadership
-Direct Reply:   ${data.email}
-Status:         NEW INCOMING LEAD
+Submitted At:       ${timestamp}
+Recipient:          Studio Admin & Leadership
+Direct Reply:       ${data.email}
+Status:             NEW INCOMING LEAD
 ======================================================`;
 }
 
@@ -57,7 +60,8 @@ Status:         NEW INCOMING LEAD
  * Builds a ready-to-use mailto URL with the professional template.
  */
 export function createMailtoLink(data: FormData): string {
-  const subject = `[web4u Booking] ${data.name} — ${data.projectType} (${data.budget})`;
+  const quality = data.qualityTier || data.budget || "Custom Standard";
+  const subject = `[web4u Booking] ${data.name} — ${data.projectType} [${quality}]`;
   const body = formatEmailTemplate(data);
   return `mailto:${TARGET_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
@@ -73,19 +77,20 @@ export interface BookingSubmissionResult {
  * Uses FormSubmit AJAX API with structured table format and auto-reply.
  */
 export async function sendBookingRequest(data: FormData): Promise<BookingSubmissionResult> {
-  const subject = `🚀 [web4u Booking] ${data.name} — ${data.projectType} (${data.budget})`;
+  const quality = data.qualityTier || data.budget || "Custom Standard";
+  const subject = `🚀 [web4u Booking] ${data.name} — ${data.projectType} [${quality}]`;
 
   const payload = {
     _subject: subject,
     _replyto: data.email,
     _template: "table",
     _captcha: "false",
-    _autoresponse: `Hi ${data.name.split(" ")[0]},\n\nThank you for requesting a project with web4u Studio! We have received your project details for "${data.projectType}" (${data.budget}) and will reach out to confirm our discovery call.\n\nBest regards,\nweb4u Studio Team`,
+    _autoresponse: `Hi ${data.name.split(" ")[0]},\n\nThank you for requesting a project with web4u Studio! We have received your project details for "${data.projectType}" [${quality}]. We will review your brief and connect during our discovery call to define the exact scope and tailored quote.\n\nBest regards,\nweb4u Studio Team`,
     "Client Name": data.name,
     "Email Address": data.email,
     "Company / Organization": data.company?.trim() || "Independent / Startup",
     "Project Category": data.projectType,
-    "Estimated Budget": data.budget,
+    "Quality Standard": quality,
     "Preferred Discovery Date": data.date || "Flexible",
     "Preferred Discovery Time": data.time || "Flexible",
     "Project Brief & Details": data.details,
